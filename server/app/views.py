@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.http import HttpResponse
+#from .models import Event 
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request,'app/index.html')
 
-
-
-# Create your views here.
+def createEvent(request):
+    return HttpResponse("response")
