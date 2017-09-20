@@ -88,7 +88,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Event Form</div>
         <div class="panel-body">
-          <form>
+
+
+          <form id="event">
             <div class="form-group">
               <label for="title">Event Title:</label>
               <input type="text" class="form-control" id="title">
@@ -98,10 +100,12 @@
               <textarea type="comment" class="form-control" id="desc"></textarea>
             </div>
             <div class="checkbox">
-              <label><input type="checkbox"> RSVP</label>
+              <label><input type="checkbox" id="rsvp"> RSVP</label>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success" id="submit">Submit</button>
           </form>
+
+
         </div>
       </div>
     </div>
@@ -121,6 +125,54 @@
 </footer>
 
 </body>
+<script type="text/javascript">
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+$('#event').on('submit',function(){
+
+  var title = $('title').val();
+  var desc = $('title').val();
+  var rsvp = document.getElementById("rsvp").checked;
+  var csrftoken = getCookie('csrftoken');
+
+  data = {"title":title, "desc":desc, "rsvp":rsvp, "csrftoken": csrftoken};
+
+  $.ajax({
+      type:"POST",
+      url: "/app/createEvent/",
+      async: true,
+      dataType: 'json',
+      data: JSON.stringify(data),
+      success: function(respose){
+        if(response['code'] == 200){
+          $('#flash').append(flashMessage({"type":"success","message":response["message"]}))
+        }
+        else{
+          $('#flash').append(flashMessage({"type":"danger","message":response["message"]}))
+        }
+      }
+    });
+
+});
+
+
+</script>
+
 </html>
 
 
