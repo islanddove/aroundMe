@@ -12,9 +12,9 @@ import json
 def createEvent(request):
 	print "type " + str(type(request.body))
 	data = json.loads(request.body)
-	title = data["title"]
-	desc = data["desc"]
-	rsvp = data["rsvp"]
+	title = data[u'title']
+	desc = data[u'desc']
+	rsvp = data[u'rsvp']
 
 	newEvent = Event(event_title= title, description = desc, rsvp = rsvp)
 	newEvent.save()

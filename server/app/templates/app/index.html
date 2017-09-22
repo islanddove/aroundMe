@@ -89,7 +89,6 @@
         <div class="panel-heading">Event Form</div>
         <div class="panel-body">
 
-
           <form id="event">
             <div class="form-group">
               <label for="title">Event Title:</label>
@@ -104,7 +103,6 @@
             </div>
             <button type="submit" class="btn btn-success" id="submit">Submit</button>
           </form>
-
 
         </div>
       </div>
@@ -145,11 +143,12 @@ function getCookie(name) {
 
 $('#event').on('submit',function(){
 
-  var title = $('title').val();
-  var desc = $('title').val();
+  var title = document.getElementById("title").value;
+  var desc = document.getElementById("desc").value;
   var rsvp = document.getElementById("rsvp").checked;
   var csrftoken = getCookie('csrftoken');
 
+  console.log("The title is" + title)
   data = {"title":title, "desc":desc, "rsvp":rsvp, "csrftoken": csrftoken};
 
   $.ajax({
