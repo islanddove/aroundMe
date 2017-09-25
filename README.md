@@ -10,7 +10,7 @@ AroundMe is an elegant website built to connect users to events around them. Thi
 
 2. Have pip installed on your machine
 
-3. Have Python 2.7 or 3.3 on your machine
+3. Have Python 2.7
 
 <h3> Steps for Installing </h3>
 
