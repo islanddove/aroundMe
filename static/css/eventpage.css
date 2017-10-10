@@ -1,0 +1,101 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-image: url("https://pbs.twimg.com/media/C8hrSqoXUAEb8dV.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;  
+	font-family: arial;
+ 
+}
+
+.title
+{
+	text-align: center;
+	padding: 45px 0 20px; 
+	
+}
+
+.LoginBox {
+	
+	position:absolute;
+	top: 52%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 600px;
+	height: 725px;
+	padding: 40px 80px;
+	box-sizing: border-box;
+	background: rgba(0,0,0,0.5);
+	
+}
+
+h2
+{
+	margin:0px;
+	padding: 0 0 15px;
+	color: white;
+	text-align: center;
+
+}
+
+.LoginBox p
+{
+	margin:0;
+	padding:0;
+	font-size: 20px;
+	font-weight: light;
+	color: #fff;
+	
+}
+
+.LoginBox input
+{
+	
+	width: 100%;
+	margin-bottom: 30px;;
+	
+}
+
+.LoginBox input[type="text"],
+.LoginBox input[type="password"]
+{
+	
+	border:none;
+	border-bottom: 1px solid #fff;
+	background:transparent;
+	outline: none;
+	height: 25px;
+	color: #fff;
+	font-size: 22px;
+	
+}
+
+::placeholder
+{
+	color:rgba(255,255,255,0.5);
+	
+}
+
+.LoginBox input[type="Submit"]{
+	
+	border:none;
+	outline:none;
+	height: 50px;
+	color: white;
+	font-size: 20px;
+	background: rgba(31, 158, 216, 0.89);
+	cursor: pointer;
+	border-radius: 20px;
+}
+
+.LoginBox input[type="Submit"]:hover
+{
+	background: white;
+	color: #e61515;
+	 
+}
+
+
+
+
+	

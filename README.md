@@ -1,32 +1,38 @@
-# aroundUB
+aroundUB
 
-AroundMe is an elegant website built to connect users to events around them. This website not only  shows you what and were the events are going on but also allows users to create event for others to see. University at Buffalo is home to more than 30,000 students and there are cultural, social and academic events going on everyday.
+AroundMe is an elegant website built to connect users to events around them. This website not only shows you what and were the events are going on but also allows users to create event for others to see. University at Buffalo is home to more than 30,000 students and there are cultural, social and academic events going on everyday.
 
-<h1>Installation</h1> (Has only been tested with Mac OS)
+Installation
 
-<h3> Requirements </h3>
+(Has only been tested with Mac OS)
+Requirements
+## Running the Project Locally
 
-1. Have virtualenv installed onto your machine
+First, clone the repository to your local machine:
 
-2. Have pip installed on your machine
+```bash
+git clone https://github.com/depuleio/aroundMe.git
+```
+
+
+Install the requirements:
 
 3. Have Python 2.7
 
-<h3> Steps for Installing </h3>
+```bash
+pip install -r requirements.txt
+```
 
-Clone the repository onto your local machine and then open terminal and write the following commands: 
+Create the database:
 
-1. cd aroundMe
+```bash
+python manage.py migrate
+```
 
-2. virtualenv venv
+Finally, run the development server:
 
-3. source venv/bin/activate
+```bash
+python manage.py runserver
+```
 
-4. pip install django
-
-5. cd server
-
-6. python manage.py runserver
-
-Now open up your web browser and go to the following url: "http://localhost:8000/aroundMe/home/"
-
+The project will be available at **127.0.0.1:8000**.
