@@ -1,0 +1,16 @@
+body {
+  background: url(https://i.pinimg.com/originals/bb/84/6f/bb846f978013d6565df24a8f77891af4.jpg);
+}
+
+.logo {
+  /*font-family: Montserrat, sans-serif;*/
+}
+
+.logo a {
+  color: rgba(0,0,0,.9);
+}
+
+.logo a:hover,
+.logo a:active {
+  text-decoration: none;
+}
