@@ -25,27 +25,26 @@ def createEvent(request):
 
 	try:
 
-	 	data = json.loads(request.body.decode("utf-8"))
+		data = json.loads(request.body.decode("utf-8"))
 
-	 	title = str(data[u'title'])
-	 	date = str(data[u'date'])
-	 	time = str(data[u'time'])
-	 	location = str(data[u'location'])
-	 	category = str(data[u'category'])
-	 
+		title = str(data[u'title'])
+		date = str(data[u'date'])
+		time = str(data[u'time'])
+		location = str(data[u'location'])
+		category = str(data[u'category'])
+		
+		newEvent = Event(event_title= title, event_date= date, event_time= time, event_location= location, category= category)
+		newEvent.save()
 
-	  	newEvent = Event(event_title= title, event_date= date, event_time= time, event_location= location, category= category)
-	  	newEvent.save()
-
-	  	response["code"] = 200
-	  	response["message"] = "success"
+		response["code"] = 200
+		response["message"] = "success"
 
 	except Exception as e:
 
 		print str(e)
 		response["error"] = str(e)
 
-  	return JsonResponse(response)
+	return JsonResponse(response)
 
 
 # @login_required
