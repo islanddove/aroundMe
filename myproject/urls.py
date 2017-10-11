@@ -8,6 +8,8 @@ from boards import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^home', views.home, name='home'),
+
+    url(r'^app/createEvent/$', views.createEvent, name='createEvent'),
     
     url(r'^eventpage/$', views.eventpage, name='eventpage'),
 
