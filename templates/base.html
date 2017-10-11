@@ -40,9 +40,24 @@
           		<div class="dropdown-divider"></div>
          		<li><a href="#events" style="color: white;">Events</a></li>
          		<div class="dropdown-divider"></div>
-          		<li><a href="#Categories" style="color: white;">Categories</a></li>
-          		<div class="dropdown-divider"></div>
-          	</ul>
+            </ul>
+            <ul class="navbar-nav ml-left">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                   Categories
+                  </a>
+              		<div class="dropdown-menu" aria-labelledby="Categories"> 
+                        <a class="dropdown-item">Educational</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">Arts & Crafts</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">Social</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">Late Night</a>
+                  </div>
+                </li>
+            </ul>
+              
             {% if user.is_authenticated %}
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
