@@ -4,36 +4,88 @@
 		<meta charset="utf-8">
 		<title> Add Event </title>
 		<link rel="stylesheet" href="../static/css/eventpage.css">
+			<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	
 	<body>
 		<div class = "container">
-			<form>
-		<div class = LoginBox>
-		<h2> Create Event </h2>
-			<p> Your Name: </p>
-			<input type="text" name="" placeholder="">
-			<p> Email address: </p>
-			<input type="text" name="" placeholder="">
-			<p> Event Name </p>
-			<input type="text" name="" placeholder="">
-			<p> Event Date: </p>
-			<input type="text" name="" placeholder="">													
-			<p> Event Time Range: </p>
-		    <input type="text" name="" placeholder="">
-			<p> Event Location: </p>
-			<input type="text" name="" placeholder="">
-			<p> Event Category: 
-				<select name="Category">
-					<option value="Educational"> Educational
-					<option value="Arts & Craft"> Arts & Crafts 
-					<option value="Social"> Social
-					<option value="Late Night"> Late Night 
-				</select>
-			</p>
-
-			<input type="Submit" name="" value="Create Event Now"
-		</form>			
+			<form id="eventform">
+				<div class = LoginBox>
+				<h2> Create Event </h2>
+				<p> Event Name </p>
+				<input id="title" type="text" name="" placeholder="">
+				<p> Event Date: </p>
+				<input id="date" type="text" name="" placeholder="">													
+				<p> Event Time Range: </p>
+			    <input id="time" type="text" name="" placeholder="">
+				<p> Event Location: </p>
+				<input id="location" type="text" name="" placeholder="">
+				<p> Event Category: 
+					<select id="category" name="Category">
+						<option value="EDU"> Educational
+						<option value="ART"> Arts & Crafts 
+						<option value="SOC"> Social
+						<option value="LAT"> Late Night 
+					</select>
+				</p>
+				<input type="Submit" name="" value="Create Event Now">
+			</form>			
 		</div>
 	</body>
+
+	<script type="text/javascript">
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+
+	$('#eventform').on('submit',function(){
+	  console.log("Hello");
+	  var title = document.getElementById("title").value;
+	  var date = document.getElementById("date").value;
+	  var time = document.getElementById("time").value;
+	  var location = document.getElementById("location").value;
+	  var category = document.getElementById("category").value;
+	  //var csrftoken = getCookie('csrftoken');
+	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category};
+
+	  $.ajax({
+	      type:"POST",
+	      url: "/app/createEvent/",
+	      async: true,
+	      dataType: 'json',
+	      contentType: 'json',
+	      data: data,
+	      data: JSON.stringify(data),
+	      success: function(response){
+	        if(response['code'] == 200){
+	        	console.log("Success");
+	        }
+	        else{
+	        	console.log("Failure");
+	        }
+	      }
+	    });
+	});
+
+</script>
+
 </html>

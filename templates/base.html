@@ -1,4 +1,6 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+
+<!DOCTYPE html>
 <html>
   <head>
     
@@ -147,75 +149,18 @@
     <div class="container">
         <div class="row">
 <!-- Ideal image for flyer is 900px by 1200px -->
+      {% if events.count > 0 %}
+        {%for event in events %}
         	<div class="col-sm-3">
         		<div class="thumbnail">
      	 			<img src="https://i.pinimg.com/originals/9b/87/0b/9b870b29291ee7502d0ec99ab3b6733d.png" class="img-responsive" alt="Image"> 
      	 				<div class="container text-center">
     	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
+    	  			</div>	
     	  		</div>
-    		</div>
-
-   	 		<div class="col-sm-3"> 
-      			<div class="thumbnail">
-     	 			<img src="http://partner.ed2go.com/wp-content/uploads/2016/09/0216-07-Officeflyer_v01_Layout-1.jpg" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-    		<div class="col-sm-3">
-        		<div class="thumbnail">
-     	 			<img src="https://i.pinimg.com/originals/9b/87/0b/9b870b29291ee7502d0ec99ab3b6733d.png" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-
-   	 		<div class="col-sm-3"> 
-      			<div class="thumbnail">
-     	 			<img src="http://partner.ed2go.com/wp-content/uploads/2016/09/0216-07-Officeflyer_v01_Layout-1.jpg" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-
-    		<div class="col-sm-3">
-        		<div class="thumbnail">
-     	 			<img src="https://i.pinimg.com/originals/9b/87/0b/9b870b29291ee7502d0ec99ab3b6733d.png" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-
-   	 		<div class="col-sm-3"> 
-      			<div class="thumbnail">
-     	 			<img src="http://partner.ed2go.com/wp-content/uploads/2016/09/0216-07-Officeflyer_v01_Layout-1.jpg" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-    		<div class="col-sm-3">
-        		<div class="thumbnail">
-     	 			<img src="https://i.pinimg.com/originals/9b/87/0b/9b870b29291ee7502d0ec99ab3b6733d.png" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
-
-   	 		<div class="col-sm-3"> 
-      			<div class="thumbnail">
-     	 			<img src="http://partner.ed2go.com/wp-content/uploads/2016/09/0216-07-Officeflyer_v01_Layout-1.jpg" class="img-responsive" alt="Image"> 
-     	 				<div class="container text-center">
-    	  				<h5 style="padding-top: 20px; font-size: 20px; text-align:center; color: black !important;letter-spacing: 5px;">Event One.</h5>
-    	  				</div>	
-    	  		</div>
-    		</div>
+    		  </div>
+        {% endfor %}
+      {% endif %}
 
         </div>
     </div>

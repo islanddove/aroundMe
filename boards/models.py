@@ -9,32 +9,26 @@ from django.utils import timezone
 # Create your models here.
 
 
-class Event(models.Model):  
-    
-    event_title = models.CharField(max_length=30)
-    description = models.CharField(max_length=300)
+class Event(models.Model):    
+
+    event_title = models.CharField(max_length=30,default='')
+    event_date = models.CharField(max_length=30,default='')
+    event_time = models.CharField(max_length=15,default='')
+    event_location = models.CharField(max_length=30,default='')
+
     pub_date = models.DateTimeField(default=timezone.now)
-    rsvp = models.BooleanField(default=False)
 
-    private = models.BooleanField(default=False)
-
-    SEMINAR = 'SEM'
+    EDUCATIONAL = 'EDU'
+    ARTSCRAFTS = 'ART'
     SOCIAL = 'SOC'
-    PARTY = 'PAR'
-    CONFERENCE = 'CON'
-    MEETING = 'MTG'
-    EVENT_CATEGORIES = [ (SEMINAR, 'Seminar'), (SOCIAL, 'Social'), (PARTY, 'Party'), (CONFERENCE, 'Conference'), (MEETING,'Meeting') ]
-
+    LATENIGHT = 'LAT'
+    EVENT_CATEGORIES = [ (EDUCATIONAL, 'Educational'), (ARTSCRAFTS, 'Arts & Crafts'), (SOCIAL, 'Social'), (LATENIGHT, 'Late Night'), ]
 
     category = models.CharField(
         max_length=3,
         choices=EVENT_CATEGORIES,
         default=SOCIAL,
     )
-
-
-    longitude = models.DecimalField(max_digits=5, decimal_places=2)
-    latitude = models.DecimalField(max_digits=5, decimal_places=2)
 
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
