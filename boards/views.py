@@ -41,7 +41,6 @@ def createEvent(request):
 
 	except Exception as e:
 
-		print str(e)
 		response["error"] = str(e)
 
 	return JsonResponse(response)
