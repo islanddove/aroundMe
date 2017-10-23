@@ -40,4 +40,4 @@ urlpatterns = [
         name='password_change_done'),
 
     url(r'^admin/', admin.site.urls),
-]
+] 

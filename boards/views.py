@@ -1,58 +1,70 @@
 from __future__ import unicode_literals
-
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Event 
-import json, base64
-from django.http import JsonResponse
+from .forms import UploadFileForm
+import json, base64, os
+from django.http import JsonResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 #import base64
 
 # from django.contrib.auth.decorators import login_required
 # from django.shortcuts import get_object_or_404, redirect, render
 
+@csrf_protect
 def home(request):
+    c = {}
     events = Event.objects.all()
-    return render(request, 'base.html', {'events':events})
+    return render(request, 'base.html', {'events':events}, c)
 
-
+@csrf_protect
 def eventpage(request):
-    return render(request, 'eventpage.html')
+    c = {}
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            path = '../static/uploads/' + request.FILES['input-b1'].name
+            print("PATH "+ path)
+            handle_uploaded_file(request.FILES['input-b1'],path)
+            #return render(request, 'eventpage.html', {'form':form}, c)
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            print(form.errors)
+    else:
+        form = UploadFileForm()
+    return render(request, 'eventpage.html', {'form':form}, c)
 
-@csrf_exempt
+def handle_uploaded_file(f,path):
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+@csrf_protect
 def createEvent(request):
     
     response = {"code": 400, "message": "request failed to send"}
     
     try:
+        print("enter try")
         data = json.loads(request.body.decode("utf-8"))
-        title = str(data[u'title'])
-        date = str(data[u'date'])
-        time = str(data[u'time'])
-        location = str(data[u'location'])
-        category = str(data[u'category'])
-        data = str(data[u'data'])
         filename = str(data[u'filename'])
+        path = str("../static/uploads/" + filename)
+
+        newEvent = Event(event_title= str(data[u'title']), event_date= str(data[u'date']), event_time= str(data[u'time']), 
+            event_location= str(data[u'location']), category= str(data[u'category']),reader= path,)
         
-        ## Decode the image
-        data_index = data.index('base64') + 7
-        filedata = data[data_index:]
-        decoded_image = base64.b64decode(filedata)
-        # write file to system
-        print("HELLLLLOOOOOO")
-        path = "/static/uploads/" + filename
-        with open(path,'w') as f:
-            f.write(decoded_image)
-        
-        newEvent = Event(event_title= title, reader= path, event_date= date, event_time= time, event_location= location, category= category)
         newEvent.save()
-        
+        print("saved")
         response["code"] = 200
         response["message"] = "success"
+        
     
     except Exception as e:
         response["error"] = str(e)
+        print str(e)
         
+    
     return JsonResponse(response)
 
 
