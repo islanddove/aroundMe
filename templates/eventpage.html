@@ -6,7 +6,6 @@
 		<link rel="stylesheet" href="../static/css/eventpage.css">
 			<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -15,30 +14,110 @@
 	</head>
 	
 	<body>
-		<div class = "container">
-			<form id="eventform">
-				<div class = LoginBox>
-				<h2> Create Event </h2>
-				<p> Event Name </p>
-				<input id="title" type="text" name="" placeholder="">
-				<p> Event Date: </p>
-				<input id="date" type="text" name="" placeholder="">													
-				<p> Event Time Range: </p>
-			    <input id="time" type="text" name="" placeholder="">
-				<p> Event Location: </p>
-				<input id="location" type="text" name="" placeholder="">
-				<p> Event Category: 
-					<select id="category" name="Category">
-						<option value="EDU" style="color:rgb(0,0,0);"> Educational
-						<option value="ART" style="color:rgb(0,0,0);"> Arts & Crafts 
-						<option value="SOC" style="color:rgb(0,0,0);"> Social
-						<option value="LAT" style="color:rgb(0,0,0);"> Late Night 
-					</select>
-				</p>
-				<input type="Submit" name="" value="Create Event Now">
-			</form>			
+		<div class="container">
+
+			<div class = "row centered-form"> 
+				<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+					<div class = "panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Create Event </h3>
+						</div>
+
+						<div class="panel-body">
+							<form role="form">
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="text" name="event_name" id="event_name" class="form-control input-sm" placeholder="Event Name">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Date" name="event_date" id="event_date" class="form-control input-sm" placeholder="Event Date">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Location" name="event_location" id="event_location" class="form-control input-sm" placeholder="Event Location">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Time" name="event_time" id="event_time" class="form-control input-sm" placeholder="Event Time">
+										</div>
+									</div>
+
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+									<h5> Select Category for Event </h5>
+									<ul>
+										<input type = "checkbox" id="one">
+										<label for = "one">
+											<span></span>
+											Educational 
+										</label>
+
+									</ul>
+
+									<ul>
+										<input type = "checkbox" id="two">
+										<label for = "two">
+											<span></span>
+											Arts & Crafts
+										</label>
+									</ul>
+
+									<ul>
+										<input type = "checkbox" id="three">
+										<label for = "three">
+											<span></span>
+											Social 
+										</label>
+									</ul>
+
+									<ul>
+										<input type = "checkbox" id="four">
+										<label for = "four">
+											<span></span>
+											Late Night  
+										</label>
+									</ul>
+
+									</div>
+									
+
+
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="text" name="additional_info" id="additional_info" class="form-control input-sm" placeholder="Additional Information">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<h5> Include Flyer Below </h5>
+											<input id="input-b1" name="input-b1" type="file" required = "true" accept=".png, .jpg, .pdf, .doc" size="60" class="file">
+										</div>
+									</div>
+
+
+									<input type="Submit" value="Add Event" class="btn btn-info btn-block"> 
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
 		</div>
+
 	</body>
+</html>
+
 
 	<script type="text/javascript">
 	function getCookie(name) {

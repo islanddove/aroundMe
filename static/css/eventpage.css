@@ -1,88 +1,64 @@
 body{
-	margin: 0;
-	padding: 0;
-	background-image: url("https://pbs.twimg.com/media/C8hrSqoXUAEb8dV.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;  
-	font-family: arial;
- 
-}
-
-.title
-{
-	text-align: center;
-	padding: 45px 0 20px; 
-	
-}
-
-.LoginBox {
-	
-	position:absolute;
-	top: 52%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	width: 600px;
-	height: 725px;
-	padding: 40px 80px;
-	box-sizing: border-box;
-	background: rgba(0,0,0,0.5);
-	
-}
-
-h2
-{
-	margin:0px;
-	padding: 0 0 15px;
-	color: white;
-	text-align: center;
+	background-image: url("https://az616578.vo.msecnd.net/files/2016/04/03/635953199045378777-326453585_university-at-buffalo.jpg");
+	background-repeat: no-repeat; 
+	background-size: cover;
+	background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+    color: #fff;
+    padding: 180px 45px;
 
 }
 
-.LoginBox p
-{
-	margin:0;
-	padding:0;
-	font-size: 20px;
-	font-weight: light;
-	color: #fff;
-	
+
+/*.container{
+	background-image: url("https://az616578.vo.msecnd.net/files/2016/04/03/635953199045378777-326453585_university-at-buffalo.jpg");
+	background-size: cover;
+	background-repeat: no-repeat; 
+}*/
+
+.centered-form {
+
+	margin-top: 60px;
+	text-align: left;
+
 }
 
-.LoginBox input
-{
+
+.centered-form .panel{
+	position: fixed;
+	min-width: 40%;
+	top: 20%;
+    left: 40%;
+    margin-top: -50px;
+    margin-left: -100px;
 	
-	width: 100%;
-	margin-bottom: 30px;;
-	
+	background:rgba(255,255,255,0.8);
+	box-shadow: rgba(0,0,0,0.3)20px 20px 20px;
+	width: 500px;
+
+	padding: 20px 20px;
+
+	text-align: left;
+	display: inline-block;
+
 }
 
-.LoginBox input[type="text"],
-.LoginBox input[type="password"]
-{
-	
-	border:none;
-	border-bottom: 1px solid #fff;
-	background:transparent;
-	outline: none;
-	height: 25px;
-	color: #fff;
-	font-size: 22px;
-	
+.input[type=checkbox]{
+	display: inline-block;
 }
 
-::placeholder
-{
-	color:rgba(255,255,255,0.5);
-	
-}
+
 
 .LoginBox input[type="Submit"]{
 	
 	border:none;
 	outline:none;
-	height: 50px;
+	height: 40px;
 	color: white;
-	font-size: 20px;
+	font-size: 30px;
 	background: rgba(31, 158, 216, 0.89);
 	cursor: pointer;
 	border-radius: 20px;
