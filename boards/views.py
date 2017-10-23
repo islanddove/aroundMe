@@ -27,10 +27,12 @@ def eventpage(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            path = '/home/depuleio/aroundMe/static/uploads/' + request.FILES['input-b1'].name
-            print("PATH "+ path)
-            handle_uploaded_file(request.FILES['input-b1'],path)
-            #return render(request, 'eventpage.html', {'form':form}, c)
+            filename = request.FILES.get('input-b1')
+            print(str(filename))
+            if filename != None:
+                filename = filename.name
+                path = '/home/depuleio/aroundMe/static/uploads/' + filename
+                handle_uploaded_file(request.FILES['input-b1'],path)
             return HttpResponseRedirect(reverse('home'))
         else:
             print(form.errors)
@@ -51,8 +53,11 @@ def createEvent(request):
     try:
         print("enter try")
         data = json.loads(request.body.decode("utf-8"))
-        filename = str(data[u'filename'])
-        path = str("../static/uploads/" + filename)
+        filename = str(data.get(u'filename'))
+        if filename == None:
+            path = "https://i.pinimg.com/originals/9b/87/0b/9b870b29291ee7502d0ec99ab3b6733d.png"
+        else:
+            path = str("../static/uploads/" + filename)
 
         newEvent = Event(event_title= str(data[u'title']), event_date= str(data[u'date']), event_time= str(data[u'time']), 
             event_location= str(data[u'location']), category= str(data[u'category']),reader= path,)
