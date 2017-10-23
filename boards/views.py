@@ -1,5 +1,13 @@
 from __future__ import unicode_literals
 
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import UpdateView
+
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -14,6 +22,8 @@ def home(request):
     events = Event.objects.all()
     return render(request, 'base.html', {'events':events})
 
+def landingpage(request):
+	return render(request, 'landing.html')
 
 def eventpage(request):
 	return render(request, 'eventpage.html')

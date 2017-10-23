@@ -8,7 +8,7 @@ from boards import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^home', views.home, name='home'),
-
+    url(r'^landingpage/$', views.landingpage, name='landingpage'),
     url(r'^app/createEvent/$', views.createEvent, name='createEvent'),
     
     url(r'^eventpage/$', views.eventpage, name='eventpage'),
@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^reset/complete/$',
         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
-
+    #url(r'^settings/account/$', views.UserUpdateView.as_view(template_name='my_account.html'), name='my_account'),
     url(r'^settings/password/$', auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
         name='password_change'),
     url(r'^settings/password/done/$', auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
