@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> Add Event </title>
+		<link rel="stylesheet" href="/static/css/eventpage.css">
+			<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	
+	<body>
+		<div class="container">
+
+			<div class = "row centered-form"> 
+				<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+					<div class = "panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Create Event </h3>
+						</div>
+
+						<div class="panel-body">
+							<form role="form" id="eventForm" method="post" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="text" name="event_name" id="event_name" class="form-control input-sm" placeholder="Event Name">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Date" name="event_date" id="event_date" class="form-control input-sm" placeholder="Event Date">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Location" name="event_location" id="event_location" class="form-control input-sm" placeholder="Event Location">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="Time" name="event_time" id="event_time" class="form-control input-sm" placeholder="Event Time">
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+									<h5> Select Category for Event </h5>
+                                    <form id="categories">
+										<ul>
+											<input name="cat" type = "radio" id="one">
+											<label for = "one">
+												<span></span>
+												Educational 
+											</label>
+
+										</ul>
+
+										<ul>
+											<input name="cat" type = "radio" id="two">
+											<label for = "two">
+												<span></span>
+												Arts & Crafts
+											</label>
+										</ul>
+
+										<ul>
+											<input name="cat" type = "radio" id="three">
+											<label for = "three">
+												<span></span>
+												Social 
+											</label>
+										</ul>
+
+										<ul>
+											<input name="cat" type = "radio" id="four">
+											<label for = "four">
+												<span></span>
+												Late Night  
+											</label>
+										</ul>
+                                    </form>
+                                </div>	
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" name="additional_info" id="additional_info" class="form-control input-sm" placeholder="Additional Information">
+									</div>
+								</div>
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<h5> Include Flyer Below </h5>
+										<input id="input-b1" name="input-b1" type="file" accept=".png, .jpg, .pdf, .doc" size="60" class="file">
+									    {% csrf_token %}
+									</div>
+								</div>
+								{% csrf_token %}
+								<button type="submit" value="Add Event" class="btn btn-info btn-block">Add Event</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
+
+
+	<script type="text/javascript">
+
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+	
+	var csrftoken = getCookie('csrftoken');
+
+	$.ajaxSetup({
+	    beforeSend: function(xhr, settings) {
+	        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	    }
+	});
+
+    var files = [];
+    var file;
+    $("input[type=file]").change(function(event) {
+    	console.log("PUSSY");
+        $.each(event.target.files, function(index, file) {
+	        var reader = new FileReader();
+	        reader.onload = function(event) {  
+	            object = {};
+	            object.filename = file.name;
+	            object.data = event.target.result;
+	            files.push(object);                           
+	        };                                      
+        reader.readAsDataURL(file);                                     
+    	});
+    });
+
+
+	$('#eventForm').on('submit',function(){
+	  console.log(files);
+	  var title = document.getElementById("event_name").value;
+	  var date = document.getElementById("event_date").value;
+	  var time = document.getElementById("event_time").value;
+	  var location = document.getElementById("event_location").value;
+      var category = $("input[name=cat]:checked").val();
+      var file = files[0];
+	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category, "filename":file.filename};
+	  //"data":file.data};
+
+	  $.ajax({
+	      type:"POST",
+	      url: "/app/createEvent/",
+	      async: true,
+	      dataType: 'json',
+	      contentType: 'json',
+	      data: data,
+	      data: JSON.stringify(data),
+	      success: function(response){
+	        if(response['code'] == 200){
+	        	console.log("Success");
+	        }
+	        else{
+	        	console.log(response["error"]);
+	        }
+	      }
+	    });
+	});
+
+</script>
+
+</html>
