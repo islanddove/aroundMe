@@ -24,7 +24,7 @@
 						</div>
 
 						<div class="panel-body">
-							<form role="form">
+							<form role="form" id="eventForm">
 								<div class="row">
 									<div class="col-xs-6 col-sm-6 col-md-6">
 										<div class="form-group">
@@ -53,8 +53,9 @@
 
 									<div class="col-xs-6 col-sm-6 col-md-6">
 									<h5> Select Category for Event </h5>
+                                    <form id="categories">
 									<ul>
-										<input type = "checkbox" id="one">
+										<input name="cat" type = "radio" id="one">
 										<label for = "one">
 											<span></span>
 											Educational 
@@ -63,7 +64,7 @@
 									</ul>
 
 									<ul>
-										<input type = "checkbox" id="two">
+										<input name="cat" type = "radio" id="two">
 										<label for = "two">
 											<span></span>
 											Arts & Crafts
@@ -71,7 +72,7 @@
 									</ul>
 
 									<ul>
-										<input type = "checkbox" id="three">
+										<input name="cat" type = "radio" id="three">
 										<label for = "three">
 											<span></span>
 											Social 
@@ -79,14 +80,14 @@
 									</ul>
 
 									<ul>
-										<input type = "checkbox" id="four">
+										<input name="cat" type = "radio" id="four">
 										<label for = "four">
 											<span></span>
 											Late Night  
 										</label>
 									</ul>
-
-									</div>
+                                    </form>
+                                </div>
 									
 
 
@@ -136,14 +137,15 @@
 		return cookieValue;
 	}
 
-	$('#eventform').on('submit',function(){
+	$('#eventForm').on('submit',function(){
 	  console.log("Hello");
-	  var title = document.getElementById("title").value;
-	  var date = document.getElementById("date").value;
-	  var time = document.getElementById("time").value;
-	  var location = document.getElementById("location").value;
-	  var category = document.getElementById("category").value;
+	  var title = document.getElementById("event_name").value;
+	  var date = document.getElementById("event_date").value;
+	  var time = document.getElementById("event_time").value;
+	  var location = document.getElementById("event_location").value;
+	  //var category = document.getElementById("category").value;
 	  //var csrftoken = getCookie('csrftoken');
+      var category = $("input[name=cat]:checked").val();
 	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category};
 
 	  $.ajax({
