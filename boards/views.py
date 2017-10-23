@@ -1,59 +1,70 @@
 from __future__ import unicode_literals
-
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views.generic import UpdateView
-
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Event 
-import json
-from django.http import JsonResponse
+from .forms import UploadFileForm
+import json, base64, os
+from django.http import JsonResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+#import base64
 
 # from django.contrib.auth.decorators import login_required
 # from django.shortcuts import get_object_or_404, redirect, render
 
+@csrf_protect
 def home(request):
+    c = {}
     events = Event.objects.all()
-    return render(request, 'base.html', {'events':events})
+    return render(request, 'base.html', {'events':events}, c)
 
-def landingpage(request):
-	return render(request, 'landing.html')
-
+@csrf_protect
 def eventpage(request):
-	return render(request, 'eventpage.html')
+    c = {}
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            path = '/home/depuleio/aroundMe/static/uploads/' + request.FILES['input-b1'].name
+            print("PATH "+ path)
+            handle_uploaded_file(request.FILES['input-b1'],path)
+            #return render(request, 'eventpage.html', {'form':form}, c)
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            print(form.errors)
+    else:
+        form = UploadFileForm()
+    return render(request, 'eventpage.html', {'form':form}, c)
 
-@csrf_exempt
+def handle_uploaded_file(f,path):
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+@csrf_protect
 def createEvent(request):
+    
+    response = {"code": 400, "message": "request failed to send"}
+    
+    try:
+        print("enter try")
+        data = json.loads(request.body.decode("utf-8"))
+        filename = str(data[u'filename'])
+        path = str("/home/depuleio/aroundMe/static/uploads/" + filename)
 
-	response = {"code": 400, "message": "request failed to send"}
-
-	try:
-
-		data = json.loads(request.body.decode("utf-8"))
-
-		title = str(data[u'title'])
-		date = str(data[u'date'])
-		time = str(data[u'time'])
-		location = str(data[u'location'])
-		category = str(data[u'category'])
-		
-		newEvent = Event(event_title= title, event_date= date, event_time= time, event_location= location, category= category)
-		newEvent.save()
-
-		response["code"] = 200
-		response["message"] = "success"
-
-	except Exception as e:
-
-		response["error"] = str(e)
-
-	return JsonResponse(response)
+        newEvent = Event(event_title= str(data[u'title']), event_date= str(data[u'date']), event_time= str(data[u'time']), 
+            event_location= str(data[u'location']), category= str(data[u'category']),reader= path,)
+        
+        newEvent.save()
+        print("saved")
+        response["code"] = 200
+        response["message"] = "success"
+        
+    
+    except Exception as e:
+        response["error"] = str(e)
+        
+    
+    return JsonResponse(response)
 
 
 # @login_required
