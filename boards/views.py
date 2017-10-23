@@ -12,6 +12,9 @@ from django.core.urlresolvers import reverse
 # from django.contrib.auth.decorators import login_required
 # from django.shortcuts import get_object_or_404, redirect, render
 
+def landingpage(request):
+    return render(request, 'landing.html')
+
 @csrf_protect
 def home(request):
     c = {}
@@ -49,7 +52,7 @@ def createEvent(request):
         print("enter try")
         data = json.loads(request.body.decode("utf-8"))
         filename = str(data[u'filename'])
-        path = str("/home/depuleio/aroundMe/static/uploads/" + filename)
+        path = str("../static/uploads/" + filename)
 
         newEvent = Event(event_title= str(data[u'title']), event_date= str(data[u'date']), event_time= str(data[u'time']), 
             event_location= str(data[u'location']), category= str(data[u'category']),reader= path,)
