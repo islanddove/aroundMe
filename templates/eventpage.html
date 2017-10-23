@@ -137,16 +137,32 @@
 		return cookieValue;
 	}
 
+    var files = []
+    $("input[type=file]").change(function(event) {
+        $.each(event.target.files, function(index, file) {
+        var reader = new FileReader();
+        reader.onload = function(event) {  
+            object = {};
+            object.filename = file.name;
+            object.data = event.target.result;
+            files.push(object);                           
+        };                                      
+        reader.readAsDataURL(file);                                     
+    });
+    }); 
+
+
 	$('#eventForm').on('submit',function(){
 	  console.log("Hello");
 	  var title = document.getElementById("event_name").value;
 	  var date = document.getElementById("event_date").value;
 	  var time = document.getElementById("event_time").value;
 	  var location = document.getElementById("event_location").value;
-	  //var category = document.getElementById("category").value;
 	  //var csrftoken = getCookie('csrftoken');
       var category = $("input[name=cat]:checked").val();
-	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category};
+      var file = files[0]
+	  var data = {"title":title, "filename":file.filename, "data":file.data, 
+      "date":date, "time":time, "location":location, "category":category};
 
 	  $.ajax({
 	      type:"POST",
@@ -161,7 +177,7 @@
 	        	console.log("Success");
 	        }
 	        else{
-	        	console.log("Failure");
+	        	console.log(response["error"]);
 	        }
 	      }
 	    });
