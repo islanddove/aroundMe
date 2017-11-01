@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title> Add Event </title>
-		<link rel="stylesheet" href="../static/css/eventpage.css">
+		<link rel="stylesheet" href="/static/css/eventpage.css">
 			<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<!-- jQuery library -->
@@ -24,7 +24,7 @@
 						</div>
 
 						<div class="panel-body">
-							<form role="form" id="eventForm">
+							<form role="form" id="eventForm" method="post" enctype="multipart/form-data">
 								<div class="row">
 									<div class="col-xs-6 col-sm-6 col-md-6">
 										<div class="form-group">
@@ -50,67 +50,62 @@
 										</div>
 									</div>
 
-
 									<div class="col-xs-6 col-sm-6 col-md-6">
 									<h5> Select Category for Event </h5>
                                     <form id="categories">
-									<ul>
-										<input name="cat" type = "radio" id="one">
-										<label for = "one">
-											<span></span>
-											Educational 
-										</label>
+										<ul>
+											<input name="cat" type = "radio" id="one">
+											<label for = "one">
+												<span></span>
+												Educational 
+											</label>
 
-									</ul>
+										</ul>
 
-									<ul>
-										<input name="cat" type = "radio" id="two">
-										<label for = "two">
-											<span></span>
-											Arts & Crafts
-										</label>
-									</ul>
+										<ul>
+											<input name="cat" type = "radio" id="two">
+											<label for = "two">
+												<span></span>
+												Arts & Crafts
+											</label>
+										</ul>
 
-									<ul>
-										<input name="cat" type = "radio" id="three">
-										<label for = "three">
-											<span></span>
-											Social 
-										</label>
-									</ul>
+										<ul>
+											<input name="cat" type = "radio" id="three">
+											<label for = "three">
+												<span></span>
+												Social 
+											</label>
+										</ul>
 
-									<ul>
-										<input name="cat" type = "radio" id="four">
-										<label for = "four">
-											<span></span>
-											Late Night  
-										</label>
-									</ul>
+										<ul>
+											<input name="cat" type = "radio" id="four">
+											<label for = "four">
+												<span></span>
+												Late Night  
+											</label>
+										</ul>
                                     </form>
-                                </div>
-									
+                                </div>	
 
-
-
-									<div class="col-xs-6 col-sm-6 col-md-6">
-										<div class="form-group">
-											<input type="text" name="additional_info" id="additional_info" class="form-control input-sm" placeholder="Additional Information">
-										</div>
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<input type="text" name="additional_info" id="additional_info" class="form-control input-sm" placeholder="Additional Information">
 									</div>
+								</div>
 
-									<div class="col-xs-6 col-sm-6 col-md-6">
-										<div class="form-group">
-											<h5> Include Flyer Below </h5>
-											<input id="input-b1" name="input-b1" type="file" required = "true" accept=".png, .jpg, .pdf, .doc" size="60" class="file">
-										</div>
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<h5> Include Flyer Below </h5>
+										<input id="input-b1" name="input-b1" type="file" accept=".png, .jpg, .pdf, .doc" size="60" class="file" required>
+									    {% csrf_token %}
 									</div>
-
-
-									<input type="Submit" value="Add Event" class="btn btn-info btn-block"> 
+								</div>
+								{% csrf_token %}
+								<button type="submit" value="Add Event" class="btn btn-info btn-block">Add Event</button>
 								</div>
 							</form>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -121,6 +116,7 @@
 
 
 	<script type="text/javascript">
+
 	function getCookie(name) {
 		var cookieValue = null;
 		if (document.cookie && document.cookie !== '') {
@@ -136,17 +132,42 @@
 		}
 		return cookieValue;
 	}
+	
+	var csrftoken = getCookie('csrftoken');
+
+	$.ajaxSetup({
+	    beforeSend: function(xhr, settings) {
+	        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	    }
+	});
+
+    var files = [];
+    var file;
+    $("input[type=file]").change(function(event) {
+    	console.log("PUSSY");
+        $.each(event.target.files, function(index, file) {
+	        var reader = new FileReader();
+	        reader.onload = function(event) {  
+	            object = {};
+	            object.filename = file.name;
+	            object.data = event.target.result;
+	            files.push(object);                           
+	        };                                      
+        reader.readAsDataURL(file);                                     
+    	});
+    });
+
 
 	$('#eventForm').on('submit',function(){
-	  console.log("Hello");
+	  console.log(files);
 	  var title = document.getElementById("event_name").value;
 	  var date = document.getElementById("event_date").value;
 	  var time = document.getElementById("event_time").value;
 	  var location = document.getElementById("event_location").value;
-	  //var category = document.getElementById("category").value;
-	  //var csrftoken = getCookie('csrftoken');
       var category = $("input[name=cat]:checked").val();
-	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category};
+      var file = files[0];
+	  var data = {"title":title, "date":date, "time":time, "location":location, "category":category, "filename":file.filename};
+	  //"data":file.data};
 
 	  $.ajax({
 	      type:"POST",
@@ -161,7 +182,7 @@
 	        	console.log("Success");
 	        }
 	        else{
-	        	console.log("Failure");
+	        	console.log(response["error"]);
 	        }
 	      }
 	    });
